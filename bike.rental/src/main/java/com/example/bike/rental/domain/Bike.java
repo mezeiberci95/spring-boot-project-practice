@@ -40,8 +40,8 @@ public @Data class Bike {
 	@Column(name = "enabled")
 	private boolean enabled;
 	
-	/*@OneToMany(mappedBy="bike")
-	private List<Object> rentals;*/
+	@OneToMany(mappedBy="bike")
+	private List<Rental> rentals;
 
 	public Bike(@NotNull int manufactureDate, @NotNull String bikeType, @NotNull int dailyPrice,
 			@NotNull boolean enabled) {
