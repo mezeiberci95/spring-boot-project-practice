@@ -1,6 +1,6 @@
 package com.example.bike.rental.domain;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -31,13 +31,13 @@ public @Data class Rental {
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "begin_date")
-	private Date beginDate;
+	private LocalDate beginDate;
 	
 	@NotNull
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "end_date")
-	private Date endDate;
+	private LocalDate endDate;
 	
 	@NotNull
 	@Column(name = "days_of_rental")
@@ -52,7 +52,7 @@ public @Data class Rental {
 	@ManyToOne
 	private Bike bike;
 
-	public Rental(Date beginDate, Date endDate, int daysOfRental, int sumPrice, Renter renter, Bike bike) {
+	public Rental(LocalDate beginDate, LocalDate endDate, int daysOfRental, int sumPrice, Renter renter, Bike bike) {
 		this.beginDate = beginDate;
 		this.endDate = endDate;
 		this.daysOfRental = daysOfRental;
