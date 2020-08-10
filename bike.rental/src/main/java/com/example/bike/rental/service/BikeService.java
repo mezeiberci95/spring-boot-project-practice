@@ -17,8 +17,9 @@ public class BikeService {
 	
 	BikeRepository bikeRepo;
 	
-	EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "Eclipselink_JPA" );
-    EntityManager entitymanager = emfactory.createEntityManager();
+	/*EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "Eclipselink_JPA" );
+    EntityManager entitymanager = emfactory.createEntityManager();*/
+    
 	public BikeRepository getBikeRepo() {
 		return bikeRepo;
 	}

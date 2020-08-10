@@ -27,6 +27,9 @@ public @Data class Bike {
 	@Column(name = "manufacture_date")
 	private int manufactureDate;
 	
+	@NotNull
+	@Column(name = "frame_number")
+	private String frameNumber;
 	
 	@NotNull
 	@Column(name = "bike_type")
@@ -43,10 +46,11 @@ public @Data class Bike {
 	@OneToMany(mappedBy="bike")
 	private List<Rental> rentals;
 
-	public Bike(@NotNull int manufactureDate, @NotNull String bikeType, @NotNull int dailyPrice,
+	public Bike(@NotNull int manufactureDate, @NotNull String frameNumber, @NotNull String bikeType, @NotNull int dailyPrice,
 			@NotNull boolean enabled) {
 		super();
 		this.manufactureDate = manufactureDate;
+		this.frameNumber = frameNumber;
 		this.bikeType = bikeType;
 		this.dailyPrice = dailyPrice;
 		this.enabled = enabled;

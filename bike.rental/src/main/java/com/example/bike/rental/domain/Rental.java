@@ -28,13 +28,11 @@ public @Data class Rental {
 	private Long id;
 	
 	@NotNull
-	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "begin_date")
 	private LocalDate beginDate;
 	
 	@NotNull
-	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "end_date")
 	private LocalDate endDate;
