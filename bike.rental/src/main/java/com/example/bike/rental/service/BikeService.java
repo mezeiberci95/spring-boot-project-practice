@@ -24,7 +24,6 @@ public class BikeService {
 		return bikeRepo;
 	}
 	
-	
 	@Autowired
 	public void setBikeRepo(BikeRepository bikeRepo) {
 		this.bikeRepo = bikeRepo;

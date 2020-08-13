@@ -1,0 +1,47 @@
+<!doctype html>
+<html layout:decorate="~{layout_for_all}">
+
+	<body>
+        <div layout layout:fragment="content">
+                <div class="datarange_picker_container">
+                    <h3>Select the range where you would like to rent a bike!<h3>				
+                </div>    
+            <div class="form-group">
+                <form action="#" th:action="@{/cars}" th:object="${rentDates}" method="post">
+                    <div style="color: red;" th:if="${#fields.hasErrors('*')}">
+                        <p><strong>Errors</strong></p>
+                        <ul>
+                            <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+                        </ul>
+                    </div>
+    
+                    <div class="row">
+                        <div class="col-sm">
+                            <label for="start">Start date:</label>
+                            <input type="date" class="form-control" id="start" name="rentStart"
+                                th:value="${currentDate}"
+                                th:min="${currentDate}"
+                                max="2020-12-31" th:field="*{startDate}">
+                        </div>
+                        <div class="col-sm">
+                            <label for="end_d">End date:</label>
+                                <input type="date" class="form-control" id="end" name="rentEnd"
+                                th:value="${currentDate}"
+                                th:min="${currentDate}" max="2020-12-31" th:field="*{endDate}">
+                        </div>
+                        <div class="col">
+                            <div class="col-sm"> 
+                                <br>
+                            </div>
+                            <div class="col-sm">
+                                <input type="submit" value="Search" class="btn btn-primary">
+                            </div>
+                        </div>
+                    </div>
+                </form:form>             
+            </div>
+        </div>
+    </body>
+
+
+</html>
