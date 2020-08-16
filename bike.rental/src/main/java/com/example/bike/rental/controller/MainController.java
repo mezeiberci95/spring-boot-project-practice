@@ -60,8 +60,8 @@ public class MainController {
 		model.addAttribute("pageTitle", "Bike rental");
 		model.addAttribute("currentDate", LocalDate.now());
 		model.addAttribute("rentDates", new RentDates());
-		return "index";
+		return "date_picker_form";
 	}
-	
+
 
 }

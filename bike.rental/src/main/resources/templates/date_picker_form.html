@@ -1,0 +1,72 @@
+<!doctype html>
+<html layout:decorate="~{layout}">
+
+	<body>
+        <div layout layout:fragment="content">
+            <h5 class="card-title">Select the date when you would like to rent a bike</h5>
+            <!---->
+            <form>
+                <div class="form-row">
+                    <div class="row">
+                        <div class="col">
+                            <div id="start-date-picker" class="md-form md-outline input-with-post-icon datepicker" inline="true">
+                                <label for="start_date"> Start date</label>
+                                <input placeholder="Select date" type="date" id="start_date" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div id="end-date-picker" class="md-form md-outline input-with-post-icon datepicker" inline="true">
+                                <label for="end_date"> End date</label>
+                                <input placeholder="Select date" type="date" id="end_date" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="search_button">
+                                <button type="button" class="btn btn-primary" id="serach" inline="true" style="margin-top: 35%;"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
+                                    <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+                                </svg> Search</button>
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+              </form>
+            <!---->
+                <!--<form action="#" th:action="@{/cars}" th:object="${rentDates}" method="post">
+                    <div style="color: red;" th:if="${#fields.hasErrors('*')}">
+                        <p><strong>Errors</strong></p>
+                        <ul>
+                            <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+                        </ul>
+                    </div>
+    
+                    <div class="row">
+                        <div class="col-sm">
+                            <label for="start">Start date:</label>
+                            <input type="date" class="form-control" id="start" name="rentStart"
+                                th:value="${currentDate}"
+                                th:min="${currentDate}"
+                                max="2020-12-31" th:field="*{startDate}">
+                        </div>
+                        <div class="col-sm">
+                            <label for="end_d">End date:</label>
+                                <input type="date" class="form-control" id="end" name="rentEnd"
+                                th:value="${currentDate}"
+                                th:min="${currentDate}" max="2020-12-31" th:field="*{endDate}">
+                        </div>
+                        <div class="col">
+                            <div class="col-sm"> 
+                                <br>
+                            </div>
+                            <div class="col-sm">
+                                <input type="submit" value="Search" class="btn btn-primary">
+                            </div>
+                        </div>
+                    </div>
+                </form:form> -->        
+            </div>
+        </div>
+    </body>
+
+
+</html>
