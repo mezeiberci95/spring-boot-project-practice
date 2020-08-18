@@ -5,10 +5,15 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.bike.rental.config.MvcConfig;
 import com.example.bike.rental.domain.RentDates;
@@ -61,6 +66,14 @@ public class MainController {
 		model.addAttribute("currentDate", LocalDate.now());
 		model.addAttribute("rentDates", new RentDates());
 		return "date_picker_form";
+	}
+	
+	@PostMapping("/bikes")
+	public String listBikes(@ModelAttribute @Valid RentDates rentDates, BindingResult bindingResult, Model model) {
+		model.addAttribute("pageTitle", "Bike rental");
+		model.addAttribute("startDate", rentDates.getStartDate().toString());
+		model.addAttribute("endDate", rentDates.getEndDate().toString());
+		return "bikes_listed";
 	}
 
 
