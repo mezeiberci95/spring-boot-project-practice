@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -69,14 +70,14 @@ public class MainController {
 	}
 	
 	@PostMapping("/bikes")
-	public String listBikes(@ModelAttribute @Valid RentDates rentDates, BindingResult bindingResult, Model model) {
-		if(bindingResult.hasErrors()) {
-			return "date_picker_form";
+	public String listBikes(@Valid RentDates rentDates, BindingResult bindingResult, Model model) {
+		if(bindingResult.hasErrors() || rentDates == null || rentDates.getStartDate() == null || rentDates.getEndDate() == null || !rentDates.validate()) {
+			return "redirect:invalid-date-selected";
 		}
 		model.addAttribute("pageTitle", "Bike rental");
 		model.addAttribute("startDate", rentDates.getStartDate().toString());
 		model.addAttribute("endDate", rentDates.getEndDate().toString());
-
+		System.out.println(rentDates.getStartDate().getClass().getSimpleName());
 		return "bikes_listed";
 	}
 
