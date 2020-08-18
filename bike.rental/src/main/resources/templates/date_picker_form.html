@@ -5,6 +5,12 @@
         <div layout layout:fragment="content">
             <h5 class="card-title">Select the date when you would like to rent a bike</h5>
             <form action="#" th:action="@{/bikes}" th:object="${rentDates}" method="post">
+                <div style="color: red;" th:if="${#fields.hasErrors('*')}">
+                    <p><strong>Errors</strong></p>
+                    <ul>
+                        <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+                    </ul>
+                </div>
                 <div class="form-row">
                     <div class="row">
                         <div class="col">

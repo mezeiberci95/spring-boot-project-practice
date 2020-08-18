@@ -70,9 +70,13 @@ public class MainController {
 	
 	@PostMapping("/bikes")
 	public String listBikes(@ModelAttribute @Valid RentDates rentDates, BindingResult bindingResult, Model model) {
+		if(bindingResult.hasErrors()) {
+			return "date_picker_form";
+		}
 		model.addAttribute("pageTitle", "Bike rental");
 		model.addAttribute("startDate", rentDates.getStartDate().toString());
 		model.addAttribute("endDate", rentDates.getEndDate().toString());
+
 		return "bikes_listed";
 	}
 
