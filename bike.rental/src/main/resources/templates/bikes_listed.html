@@ -6,6 +6,59 @@
             <h5 class="card-title">Choose the bike you would like to rent</h5>
             <p >Start date <span th:text="${startDate}"></span></p>
             <p >End date <span th:text="${endDate}"></span></p>
+            <form action="#" th:action="@{/bikes}" th:object="${rentDates}" method="post">
+                <div style="color: red;" th:if="${#fields.hasErrors('*')}">
+                    <p><strong>Errors</strong></p>
+                    <ul>
+                        <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+                    </ul>
+                </div>
+                <div class="form-row">
+                    <div class="row">
+                        <div class="col">
+                            <div id="start-date-picker" class="md-form md-outline input-with-post-icon datepicker" inline="true">
+                                <label for="start_date"> Start date</label>
+                                <input placeholder="Select date" type="date" id="start_date" class="form-control" th:value="${currentDate}"
+                                th:min="${currentDate}"
+                                max="2020-12-31" th:field="*{startDate}">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div id="end-date-picker" class="md-form md-outline input-with-post-icon datepicker" inline="true">
+                                <label for="end_date"> End date</label>
+                                <input placeholder="Select date" type="date" id="end_date" class="form-control"th:value="${currentDate}"
+                                th:min="${currentDate}"
+                                max="2020-12-31" th:field="*{endDate}">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="search_button">
+                                <button type="submit" class="btn btn-primary" id="serach" inline="true" style="margin-top: 35%;"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
+                                    <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+                                </svg> Search</button>
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+            </form>                  
+            <div class="centered">
+
+                <section class="cards">
+                    
+                    <article class="card" th:each="bike : ${bikes}" >
+                        <img class="card-img-top" th:src="@{'/img/' + ${bike.id + '.jpg'}}" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title"><span th:text="${bike.bikeType}"></span></h5>
+                            <a  th:href="@{'bikes/' + ${bike.id} + '/' + ${startDate} + '/' + ${endDate}}" th:text="${bike.bikeType}" target="_self" />
+                            <p >For <span th:text="${bike.dailyPrice}"></span>ft / day</p>
+                        </div>
+                    </article>
+                    <div th:if="${#lists.isEmpty(bikes)}">
+                        Sorry there are no available bikes for the selected interval. Please choose another.
+                    </div>
+                </section>
+            </div>
         </div>
     </body>
 </html>

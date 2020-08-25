@@ -3,7 +3,9 @@ package com.example.bike.rental.controller;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.bike.rental.config.MvcConfig;
+import com.example.bike.rental.domain.Bike;
 import com.example.bike.rental.domain.RentDates;
 import com.example.bike.rental.service.BikeService;
 import com.example.bike.rental.service.RentalService;
@@ -77,7 +80,17 @@ public class MainController {
 		model.addAttribute("pageTitle", "Bike rental");
 		model.addAttribute("startDate", rentDates.getStartDate().toString());
 		model.addAttribute("endDate", rentDates.getEndDate().toString());
-		System.out.println(rentDates.getStartDate().getClass().getSimpleName());
+		
+		Bike bike1 = new Bike(1995, "asd123", "Puch Mistral", 5000, true);
+		bike1.setId(1L);
+		Bike bike2 = new Bike(1990, "asd122", "Puch Clubman", 4000, true);
+		bike2.setId(2L);
+		
+		List<Bike> bikeList = new ArrayList<Bike>();
+		bikeList.add(bike1);
+		bikeList.add(bike2);
+		
+		model.addAttribute("bikes",bikeList); // bikeService.getBikes());
 		return "bikes_listed";
 	}
 	
@@ -87,6 +100,5 @@ public class MainController {
 		model.addAttribute("message", "Invalid date selected. Start date must be before end date.");
 		return "invalid_date_page";
 	}
-
 
 }
