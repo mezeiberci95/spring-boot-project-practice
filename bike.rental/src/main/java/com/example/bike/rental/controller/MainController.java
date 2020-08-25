@@ -80,6 +80,13 @@ public class MainController {
 		System.out.println(rentDates.getStartDate().getClass().getSimpleName());
 		return "bikes_listed";
 	}
+	
+	@GetMapping("/invalid-date-selected")
+	public String invalidDateErrorPage(Model model) {
+		model.addAttribute("error", "Invalid date error");
+		model.addAttribute("message", "Invalid date selected. Start date must be before end date.");
+		return "invalid_date_page";
+	}
 
 
 }
