@@ -46,7 +46,7 @@
 
                 <section class="cards">
                     
-                    <article class="card" th:each="bike : ${bikes}" >
+                    <article class="bike_card" th:each="bike : ${bikes}" >
                         <img class="card-img-top" th:src="@{'/img/' + ${bike.id + '.jpg'}}" alt="Card image cap">
                         <div class="card-body">
                             <h5 class="card-title"><span th:text="${bike.bikeType}"></span></h5>
