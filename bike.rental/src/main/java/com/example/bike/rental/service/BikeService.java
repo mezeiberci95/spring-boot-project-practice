@@ -1,5 +1,6 @@
 package com.example.bike.rental.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -35,6 +36,25 @@ public class BikeService {
 	
 	public void saveBike(Bike bike) {
 		bikeRepo.save(bike);
-	}    
+	}
 
+	public List<Bike> getEnabledBikes() {
+		return bikeRepo.getEnabledBikes();
+	}
+	
+	public List<Bike> getDisabledBikes() {
+		return bikeRepo.getDisabledBikes();
+	}
+	
+	public List<Bike> getRentableBikes(LocalDate startDate, LocalDate endDate) {
+		return bikeRepo.getRentableBike(startDate, endDate);
+	}
+	
+	public Bike getBikeById(Long id) {
+		return bikeRepo.getBikeById(id);
+	}
+	
+	public Bike getBikeByFrameNumber(String frameNumber) {
+		return bikeRepo.getBikeByFrameNumber(frameNumber);
+	}
 }

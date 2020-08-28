@@ -1,8 +1,10 @@
 package com.example.bike.rental.controller;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -16,11 +18,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.bike.rental.config.MvcConfig;
 import com.example.bike.rental.domain.Bike;
 import com.example.bike.rental.domain.RentDates;
+import com.example.bike.rental.domain.RentDetails;
 import com.example.bike.rental.service.BikeService;
 import com.example.bike.rental.service.RentalService;
 import com.example.bike.rental.service.RenterService;
@@ -101,4 +106,40 @@ public class MainController {
 		return "invalid_date_page";
 	}
 
+	
+	@GetMapping("/cars/{id}/{startDate}/{endDate}")
+	public String showRentForm(@PathVariable(required = true) long id, @PathVariable(required = true) String startDate, @PathVariable(required = true) String endDate, Model model) throws ParseException {
+		model.addAttribute("pageTitle", "Car rental");
+		model.addAttribute("startDate", startDate);
+		model.addAttribute("endDate", endDate);
+		//model.addAttribute("days", 1);
+		
+		Bike selectedBike = bikeService.getBikeById(id);
+		model.addAttribute("bike", selectedBike);
+		
+		LocalDate start = LocalDate.parse(startDate);
+		LocalDate end = LocalDate.parse(endDate);
+		
+		if(!(start.isBefore(end) || start.equals(end)) || start.isBefore(LocalDate.now())) {
+			model.addAttribute("error", "Invalid date error");
+			model.addAttribute("message", "Invalid or past date given as argument");
+			return "redirect:invalid_date_page";
+		}
+		
+		int days = countDiffBetweenDates(start, end);
+		int sumPrice = days * selectedBike.getDailyPrice();
+		
+		RentDetails rd = new RentDetails(days, sumPrice, urlFormat.format(start), urlFormat.format(end), selectedBike.getId());
+		model.addAttribute("rentDetails", rd);
+		model.addAttribute("frameNumber",selectedBike.getFrameNumber());
+		
+		return "rentForm";
+	}
+	
+	public int countDiffBetweenDates(LocalDate startDate, LocalDate endDate) {
+	    Period period = Period.between(startDate, endDate);
+	    int diff = period.getDays() + 1;
+	 
+	    return diff;
+	}
 }
