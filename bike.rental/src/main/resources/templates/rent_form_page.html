@@ -1,0 +1,42 @@
+<!doctype html>
+<html layout:decorate="~{layout}">
+
+	<body>
+        <div layout layout:fragment="content">
+            <div class="bike-info-container">
+				<h2>You have selected <span th:text="${licencePlate}"></span> </h2>
+				<p class="rental-info"> Your rental starts at <span th:text="${rentDetails.startDate}"></span> and ends at <span th:text="${rentDetails.endDate}"></span> </p>
+				<p class="rental-info"> Please fill in the form to save your rental! </p>	
+			</div>
+			<div class="form-container">
+				<div class="form-group">
+					<form role="form" th:action="@{'/bikes/' + ${rentDetails.selectedBikeId} + '/' + ${rentDetails.startDate} + '/' + ${rentDetails.endDate}}" th:object="${rentDetails}" method="post">
+						<div style="color: red;" th:if="${#fields.hasErrors('*')}">
+						<p><strong>Errors</strong></p>
+						<ul>
+							<li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+						</ul>
+					</div>
+						<label for="name">Name:</label><br>
+						<input type="text" class="form-control" id="name" name="name" value="" th:field="*{name}"><br>
+						<label for="email">E-mail:</label><br>
+						<input type="text" class="form-control" id="email" name="email" value="" th:field="*{email}"><br>
+						<label for="name">Address:</label><br>
+						<input type="text" class="form-control" id="addr" name="addr" value="" th:field="*{address}"><br>
+						<label for="name">Phone number:</label><br>
+						<input type="text" class="form-control" id="phone" name="phone" value="" th:field="*{phone}"><br>
+						<label for="name">Days of rental:</label><br>
+						<input type="text" class="form-control-plaintext" th:value="${days}" readonly th:field="*{days}"><br>
+						<label for="name">Sum price:</label><br>
+						<input type="text" class="form-control-plaintext" th:value="${price}" readonly th:field="*{price}"><br><br>
+						<input type="hidden" id="selectedBikeId" name="selectedBikeId" th:value="${rentDetails.selectedBikeId}" th:field="*{selectedBikeId}">
+						<input type="hidden" id="startDate" name="startDate" value="${startDate}" th:value="${startDate}" th:field="*{startDate}">
+						<input type="hidden" id="endDate" name="endDate" th:value="${endDate}" th:field="*{endDate}">
+						<input type="submit" class="btn btn-primary" value="Send">
+				</form:form>
+				</div>
+			</div>
+            
+        </div>
+    </body>
+</html>

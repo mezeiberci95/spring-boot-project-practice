@@ -47,7 +47,7 @@ public class MainController {
 	private MvcConfig mvcConfig ;
 	
 	@Autowired
-	public void setCarService(BikeService bikeService) {
+	public void setBikeService(BikeService bikeService) {
 		this.bikeService = bikeService;
 	}
 
@@ -85,17 +85,8 @@ public class MainController {
 		model.addAttribute("pageTitle", "Bike rental");
 		model.addAttribute("startDate", rentDates.getStartDate().toString());
 		model.addAttribute("endDate", rentDates.getEndDate().toString());
+		model.addAttribute("bikes", bikeService.getRentableBikes(rentDates.getStartDate(), rentDates.getEndDate()));
 		
-		Bike bike1 = new Bike(1995, "asd123", "Puch Mistral", 5000, true);
-		bike1.setId(1L);
-		Bike bike2 = new Bike(1990, "asd122", "Puch Clubman", 4000, true);
-		bike2.setId(2L);
-		
-		List<Bike> bikeList = new ArrayList<Bike>();
-		bikeList.add(bike1);
-		bikeList.add(bike2);
-		
-		model.addAttribute("bikes",bikeList); // bikeService.getBikes());
 		return "bikes_listed";
 	}
 	
@@ -107,14 +98,14 @@ public class MainController {
 	}
 
 	
-	@GetMapping("/cars/{id}/{startDate}/{endDate}")
-	public String showRentForm(@PathVariable(required = true) long id, @PathVariable(required = true) String startDate, @PathVariable(required = true) String endDate, Model model) throws ParseException {
-		model.addAttribute("pageTitle", "Car rental");
+	@GetMapping("/bikes/{id}/{startDate}/{endDate}")
+	public String showRentForm(@PathVariable(required = true) Long id, @PathVariable(required = true) String startDate, @PathVariable(required = true) String endDate, Model model) throws ParseException {
+		model.addAttribute("pageTitle", "Bike rental");
 		model.addAttribute("startDate", startDate);
 		model.addAttribute("endDate", endDate);
-		//model.addAttribute("days", 1);
 		
 		Bike selectedBike = bikeService.getBikeById(id);
+		System.out.println(selectedBike.getId());
 		model.addAttribute("bike", selectedBike);
 		
 		LocalDate start = LocalDate.parse(startDate);
@@ -125,21 +116,17 @@ public class MainController {
 			model.addAttribute("message", "Invalid or past date given as argument");
 			return "redirect:invalid_date_page";
 		}
+		System.out.println(selectedBike.getId());
 		
-		int days = countDiffBetweenDates(start, end);
-		int sumPrice = days * selectedBike.getDailyPrice();
-		
-		RentDetails rd = new RentDetails(days, sumPrice, urlFormat.format(start), urlFormat.format(end), selectedBike.getId());
+		RentDetails rd = new RentDetails(startDate, endDate, selectedBike.getId());//urlFormat.format(start), urlFormat.format(end), selectedBike.getId());
+		rd.setPrice(rd.getDays() * selectedBike.getDailyPrice());
 		model.addAttribute("rentDetails", rd);
 		model.addAttribute("frameNumber",selectedBike.getFrameNumber());
+		model.addAttribute("bikeType",selectedBike.getBikeType());
 		
-		return "rentForm";
+		
+		return "rent_form_page";
 	}
 	
-	public int countDiffBetweenDates(LocalDate startDate, LocalDate endDate) {
-	    Period period = Period.between(startDate, endDate);
-	    int diff = period.getDays() + 1;
-	 
-	    return diff;
-	}
+	
 }

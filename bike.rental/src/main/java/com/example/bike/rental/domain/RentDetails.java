@@ -1,5 +1,8 @@
 package com.example.bike.rental.domain;
 
+import java.time.LocalDate;
+import java.time.Period;
+
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -45,12 +48,22 @@ public @Data class RentDetails {
 	@NotNull(message = "Selected bike's id cannot be empty") 
 	private long selectedBikeId;
 
-	public RentDetails(int days, int price, String startDate, String endDate, long selectedBikeId) {
-		this.days = days;
-		this.price = price;
+	public RentDetails(String startDate, String endDate, long selectedBikeId) {
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.selectedBikeId = selectedBikeId;
+		this.days = countDiffBetweenDates(startDate, endDate);
+		this.price = 1000;
+	}
+	
+	public int countDiffBetweenDates(String startDate, String endDate) {
+		LocalDate startLocalDate = LocalDate.parse(startDate);
+		LocalDate endLocalDate = LocalDate.parse(endDate);
+		
+	    Period period = Period.between(startLocalDate, endLocalDate);
+	    int diff = period.getDays() + 1;
+	 
+	    return diff;
 	}
 	
 }

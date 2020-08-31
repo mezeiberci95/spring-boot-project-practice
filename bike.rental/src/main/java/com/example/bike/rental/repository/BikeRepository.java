@@ -1,7 +1,6 @@
 package com.example.bike.rental.repository;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
@@ -27,10 +26,10 @@ public interface BikeRepository extends CrudRepository<Bike, Long>{
     		" or " + "r.endDate " +  "Between ?1 and ?2 )" )
     List<Bike> getRentableBike( LocalDate startDate, LocalDate endDate);
     
-    @Query("Select b " + "From Car b " + "Where b.id = ?1 " )
+    @Query("Select b " + "From Bike b " + "Where b.id = ?1 " )
     Bike getBikeById(Long id);
     
-    @Query("Select c " + "From Car c " + "Where c.licencePlate = ?1 " )
+    @Query("Select b " + "From Bike b " + "Where b.frameNumber = ?1 " )
     Bike getBikeByFrameNumber(String frameNumber);
     
 }
