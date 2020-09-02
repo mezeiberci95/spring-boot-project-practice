@@ -98,34 +98,40 @@ public class MainController {
 	}
 
 	
-	@GetMapping("/bikes/{id}/{startDate}/{endDate}")
-	public String showRentForm(@PathVariable(required = true) Long id, @PathVariable(required = true) String startDate, @PathVariable(required = true) String endDate, Model model) throws ParseException {
+	@GetMapping("/bikes/{id}/{startDateFromURL}/{endDateFromURL}")
+	public String showRentForm(@PathVariable(required = true) Long id, @PathVariable(required = true) String startDateFromURL, @PathVariable(required = true) String endDateFromURL, Model model) throws ParseException {
 		model.addAttribute("pageTitle", "Bike rental");
-		model.addAttribute("startDate", startDate);
-		model.addAttribute("endDate", endDate);
+		//model.addAttribute("startDate", startDate);
+		//model.addAttribute("endDate", endDate);
 		
 		Bike selectedBike = bikeService.getBikeById(id);
-		System.out.println(selectedBike.getId());
 		model.addAttribute("bike", selectedBike);
 		
-		LocalDate start = LocalDate.parse(startDate);
-		LocalDate end = LocalDate.parse(endDate);
+		LocalDate start = LocalDate.parse(startDateFromURL);
+		LocalDate end = LocalDate.parse(endDateFromURL);
 		
 		if(!(start.isBefore(end) || start.equals(end)) || start.isBefore(LocalDate.now())) {
 			model.addAttribute("error", "Invalid date error");
 			model.addAttribute("message", "Invalid or past date given as argument");
 			return "redirect:invalid_date_page";
 		}
-		System.out.println(selectedBike.getId());
 		
-		RentDetails rd = new RentDetails(startDate, endDate, selectedBike.getId());//urlFormat.format(start), urlFormat.format(end), selectedBike.getId());
+		RentDetails rd = new RentDetails(startDateFromURL, endDateFromURL, selectedBike.getId());//urlFormat.format(start), urlFormat.format(end), selectedBike.getId());
 		rd.setPrice(rd.getDays() * selectedBike.getDailyPrice());
 		model.addAttribute("rentDetails", rd);
 		model.addAttribute("frameNumber",selectedBike.getFrameNumber());
 		model.addAttribute("bikeType",selectedBike.getBikeType());
 		
-		
 		return "rent_form_page";
+	}
+	
+	
+	@PostMapping("/bikes/{id}/{startDateFromURL}/{endDateFromURL}")
+	public String validateFormAndSaveRental(@Valid RentDetails rentDetails, BindingResult bindingResult) {
+		if(bindingResult.hasErrors()){
+			return "rent_form_page";
+		}
+		return "redirect:/confirmed";
 	}
 	
 	
