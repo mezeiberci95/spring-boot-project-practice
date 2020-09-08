@@ -4,10 +4,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.Period;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+
 
 import javax.validation.Valid;
 
@@ -15,12 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.bike.rental.config.MvcConfig;
 import com.example.bike.rental.domain.Bike;
@@ -118,21 +113,41 @@ public class MainController {
 		
 		RentDetails rd = new RentDetails(startDateFromURL, endDateFromURL, selectedBike.getId());//urlFormat.format(start), urlFormat.format(end), selectedBike.getId());
 		rd.setPrice(rd.getDays() * selectedBike.getDailyPrice());
-		model.addAttribute("rentDetails", rd);
 		model.addAttribute("frameNumber",selectedBike.getFrameNumber());
 		model.addAttribute("bikeType",selectedBike.getBikeType());
+		model.addAttribute("rentDetailsForm", rd);
 		
 		return "rent_form_page";
 	}
-	
-	
+	 
 	@PostMapping("/bikes/{id}/{startDateFromURL}/{endDateFromURL}")
-	public String validateFormAndSaveRental(@Valid RentDetails rentDetails, BindingResult bindingResult) {
-		if(bindingResult.hasErrors()){
-			return "rent_form_page";
+	public String validateFormAndSaveRental(@Valid @ModelAttribute("rentDetailsForm") RentDetails rentDetails, BindingResult bindingResult) {
+		try {
+			if(bindingResult.hasErrors()){
+				return "rent_form_page";
+			}
+			System.out.println(rentDetails.getAddress());
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			//SHOW ERROR MESSAGE HERE
+			return "error"; 
 		}
+		
 		return "redirect:/confirmed";
 	}
+	
+	@GetMapping("/confirmed")
+	public String showConfirmation(){
+		return "confirmed";
+	}
+	
+	@GetMapping("/allbikes")
+	public String showAllBikes(Model model){
+		model.addAttribute("bikes", bikeService.getBikes());
+		model.addAttribute("pageTitle", "Bike rental");
+		return "all_bikes_page";
+	}
+	
 	
 	
 }

@@ -14,13 +14,13 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 public @Data class RentDetails {
-	//@NotNull(message = "Name too short")
+	@NotNull(message = "Name too short")
 	@NotBlank(message = "Name cannot be empty")
 	@Size(min=5, max=30, message="Name too short")
 	@Pattern(regexp="^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$", message="Not a valid name")
 	private String name;
 	
-	//@NotNull(message = "Email cannot be null.")
+	@NotNull(message = "Email cannot be null.")
 	@NotBlank(message = "Email cannot be empty") 
 	@Pattern(
 		    regexp = "^[A-Za-z0-9+_.-]+@(.+)$", 
@@ -28,12 +28,12 @@ public @Data class RentDetails {
 		    )
 	private String email;
 	
-	//@NotNull(message = "Address cannot be null.")
+	@NotNull(message = "Address cannot be null.")
 	@Pattern(regexp = "^[a-zA-Z]+(([a-zA-Z ])?[a-zA-Z]*)*\\s+[0-9]+$", message = "Address doesn't seem valid" )
 	@NotBlank(message = "Address cannot be empty")
 	private String address;
 	
-	//@NotNull(message = "Phone cannot be null.")
+	@NotNull(message = "Phone cannot be null.")
 	@NotBlank(message = "Phone cannot be empty")
 	@Pattern(regexp = "^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$", message = "Phone number format should be +20 3248371")
 	private String phone;

@@ -1,0 +1,24 @@
+<!doctype html>
+<html layout:decorate="~{layout}">
+	<body>
+        <div layout layout:fragment="content">
+            <div class="form-group">
+                <div class="datarange_picker_container">
+                    <h3>Take a look at our fleet!<h3>				
+                </div>
+            </div>
+                    
+            <div class="centered">
+                <section class="cards">
+                    <article class="card" th:each="bike : ${bikes}">
+                        <img class="card-img-top" th:src="@{${'img/' + bike.id + '.jpg'}}" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title"><span th:text="${bike.bikeType}"></span></h5>
+                            <p >For <span th:text="${bike.dailyPrice}"></span>ft / day</p>
+                        </div>
+                    </article>
+                </section>
+			</div>      
+        </div>
+    </body>
+</html>
