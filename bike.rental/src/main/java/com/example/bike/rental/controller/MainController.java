@@ -21,6 +21,8 @@ import com.example.bike.rental.config.MvcConfig;
 import com.example.bike.rental.domain.Bike;
 import com.example.bike.rental.domain.RentDates;
 import com.example.bike.rental.domain.RentDetails;
+import com.example.bike.rental.domain.Rental;
+import com.example.bike.rental.domain.Renter;
 import com.example.bike.rental.service.BikeService;
 import com.example.bike.rental.service.RentalService;
 import com.example.bike.rental.service.RenterService;
@@ -126,7 +128,23 @@ public class MainController {
 			if(bindingResult.hasErrors()){
 				return "rent_form_page";
 			}
-			System.out.println(rentDetails.getAddress());
+			
+			LocalDate startDate = LocalDate.parse(rentDetails.getStartDate());
+			LocalDate endDate = LocalDate.parse(rentDetails.getEndDate());
+			
+			Bike bike = bikeService.getBikeById(rentDetails.getSelectedBikeId());
+			Renter renter = renterService.findByEmail(rentDetails.getEmail());
+			
+			if(renter != null) {
+			Rental rental = new Rental(startDate, endDate, rentDetails.getDays(), rentDetails.getPrice(), renter, bike);
+			rentalService.saveRental(rental);
+			}
+			else {
+				renter = renterService.saveRenter(new Renter(rentDetails.getName(), rentDetails.getEmail(), rentDetails.getAddress(), rentDetails.getPhone()));
+				Rental rental = new Rental(startDate, endDate, rentDetails.getDays(), rentDetails.getPrice(), renter, bike);
+				rentalService.saveRental(rental);
+			}
+			
 		} catch (Exception e) {
 			System.out.println(e.toString());
 			//SHOW ERROR MESSAGE HERE
