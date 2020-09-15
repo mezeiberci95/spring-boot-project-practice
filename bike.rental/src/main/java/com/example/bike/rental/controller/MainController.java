@@ -82,7 +82,7 @@ public class MainController {
 		model.addAttribute("pageTitle", "Bike rental");
 		model.addAttribute("startDate", rentDates.getStartDate().toString());
 		model.addAttribute("endDate", rentDates.getEndDate().toString());
-		model.addAttribute("bikes", bikeService.getRentableBikes(rentDates.getStartDate(), rentDates.getEndDate()));
+		model.addAttribute("bikes", bikeService.findRentableBikes(rentDates.getStartDate(), rentDates.getEndDate()));
 		
 		return "bikes_listed";
 	}
@@ -101,7 +101,7 @@ public class MainController {
 		//model.addAttribute("startDate", startDate);
 		//model.addAttribute("endDate", endDate);
 		
-		Bike selectedBike = bikeService.getBikeById(id);
+		Bike selectedBike = bikeService.findBikeById(id);
 		model.addAttribute("bike", selectedBike);
 		
 		LocalDate start = LocalDate.parse(startDateFromURL);
@@ -132,7 +132,7 @@ public class MainController {
 			LocalDate startDate = LocalDate.parse(rentDetails.getStartDate());
 			LocalDate endDate = LocalDate.parse(rentDetails.getEndDate());
 			
-			Bike bike = bikeService.getBikeById(rentDetails.getSelectedBikeId());
+			Bike bike = bikeService.findBikeById(rentDetails.getSelectedBikeId());
 			Renter renter = renterService.findByEmail(rentDetails.getEmail());
 			
 			if(renter != null) {
@@ -161,7 +161,7 @@ public class MainController {
 	
 	@GetMapping("/allbikes")
 	public String showAllBikes(Model model){
-		model.addAttribute("bikes", bikeService.getBikes());
+		model.addAttribute("bikes", bikeService.findBikes());
 		model.addAttribute("pageTitle", "Bike rental");
 		return "all_bikes_page";
 	}

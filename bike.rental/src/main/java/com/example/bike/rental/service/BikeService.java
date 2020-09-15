@@ -21,7 +21,7 @@ public class BikeService {
 	/*EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "Eclipselink_JPA" );
     EntityManager entitymanager = emfactory.createEntityManager();*/
     
-	public BikeRepository getBikeRepo() {
+	public BikeRepository findBikeRepo() {
 		return bikeRepo;
 	}
 	
@@ -30,7 +30,7 @@ public class BikeService {
 		this.bikeRepo = bikeRepo;
 	}
     
-	public List<Bike> getBikes() {
+	public List<Bike> findBikes() {
 		return bikeRepo.findAll();
 	}
 	
@@ -38,23 +38,23 @@ public class BikeService {
 		bikeRepo.save(bike);
 	}
 
-	public List<Bike> getEnabledBikes() {
-		return bikeRepo.getEnabledBikes();
+	public List<Bike> findEnabledBikes() {
+		return bikeRepo.findEnabledBikes();
 	}
 	
-	public List<Bike> getDisabledBikes() {
-		return bikeRepo.getDisabledBikes();
+	public List<Bike> findDisabledBikes() {
+		return bikeRepo.findDisabledBikes();
 	}
 	
-	public List<Bike> getRentableBikes(LocalDate startDate, LocalDate endDate) {
-		return bikeRepo.getRentableBike(startDate, endDate);
+	public List<Bike> findRentableBikes(LocalDate startDate, LocalDate endDate) {
+		return bikeRepo.findRentableBikes(startDate, endDate);
 	}
 	
-	public Bike getBikeById(Long id) {
-		return bikeRepo.getBikeById(id);
+	public Bike findBikeById(Long id) {
+		return bikeRepo.findBikeById(id);
 	}
 	
-	public Bike getBikeByFrameNumber(String frameNumber) {
-		return bikeRepo.getBikeByFrameNumber(frameNumber);
+	public Bike findBikeByFrameNumber(String frameNumber) {
+		return bikeRepo.findByFrameNumber(frameNumber);
 	}
 }

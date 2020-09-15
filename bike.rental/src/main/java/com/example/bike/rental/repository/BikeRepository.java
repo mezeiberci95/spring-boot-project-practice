@@ -15,21 +15,21 @@ public interface BikeRepository extends CrudRepository<Bike, Long>{
 	List<Bike> findAll();
 	
 	@Query("Select b " + "From Bike b " + "Where b.enabled = true " )
-    List<Bike> getEnabledBikes();
+    List<Bike> findEnabledBikes();
     
     @Query("Select b " + "From Bike b " + "Where b.enabled = false " )
-    List<Bike> getDisabledBikes();
+    List<Bike> findDisabledBikes();
     
     @Query("Select b " + "From Bike b " + "Where b.enabled = true and b.id " + "Not In " + 
     		" (Select r.bike " + "From Rental r " + 
     		"where ( r.beginDate " +  "Between ?1 and ?2 )" + 
     		" or " + "r.endDate " +  "Between ?1 and ?2 )" )
-    List<Bike> getRentableBike( LocalDate startDate, LocalDate endDate);
+    List<Bike> findRentableBikes( LocalDate startDate, LocalDate endDate);
     
     @Query("Select b " + "From Bike b " + "Where b.id = ?1 " )
-    Bike getBikeById(Long id);
+    Bike findBikeById(Long id);
     
     @Query("Select b " + "From Bike b " + "Where b.frameNumber = ?1 " )
-    Bike getBikeByFrameNumber(String frameNumber);
+    Bike findByFrameNumber(String frameNumber);
     
 }
