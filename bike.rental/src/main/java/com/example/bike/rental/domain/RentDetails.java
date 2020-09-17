@@ -52,18 +52,6 @@ public @Data class RentDetails {
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.selectedBikeId = selectedBikeId;
-		this.days = countDiffBetweenDates(startDate, endDate);
-		this.price = 1000;
-	}
-	
-	public int countDiffBetweenDates(String startDate, String endDate) {
-		LocalDate startLocalDate = LocalDate.parse(startDate);
-		LocalDate endLocalDate = LocalDate.parse(endDate);
-		
-	    Period period = Period.between(startLocalDate, endLocalDate);
-	    int diff = period.getDays() + 1;
-	 
-	    return diff;
 	}
 	
 }

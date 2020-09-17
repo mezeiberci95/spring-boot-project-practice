@@ -4,7 +4,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-
+import java.time.Period;
 
 import javax.validation.Valid;
 
@@ -114,6 +114,7 @@ public class MainController {
 		}
 		
 		RentDetails rd = new RentDetails(startDateFromURL, endDateFromURL, selectedBike.getId());//urlFormat.format(start), urlFormat.format(end), selectedBike.getId());
+		rd.setDays(countDiffBetweenDates(startDateFromURL, endDateFromURL));
 		rd.setPrice(rd.getDays() * selectedBike.getDailyPrice());
 		model.addAttribute("frameNumber",selectedBike.getFrameNumber());
 		model.addAttribute("bikeType",selectedBike.getBikeType());
@@ -164,6 +165,16 @@ public class MainController {
 		model.addAttribute("bikes", bikeService.findBikes());
 		model.addAttribute("pageTitle", "Bike rental");
 		return "all_bikes_page";
+	}
+	
+	public int countDiffBetweenDates(String startDate, String endDate) {
+		LocalDate startLocalDate = LocalDate.parse(startDate);
+		LocalDate endLocalDate = LocalDate.parse(endDate);
+		
+	    Period period = Period.between(startLocalDate, endLocalDate);
+	    int diff = period.getDays() + 1;
+	 
+	    return diff;
 	}
 	
 	
