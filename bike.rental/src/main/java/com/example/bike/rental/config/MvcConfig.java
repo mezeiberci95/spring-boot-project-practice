@@ -24,7 +24,7 @@ public class MvcConfig implements WebMvcConfigurer {
     	registry
         .addResourceHandler("/**")
         .addResourceLocations("classpath:/templates/");
-    
+    	
     }
 	
 	@Override
