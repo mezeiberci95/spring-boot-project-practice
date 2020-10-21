@@ -9,5 +9,5 @@ import com.example.bike.rental.domain.Rental;
 @Repository
 public interface RentalRepository extends CrudRepository<Rental, Long>{
 
-	public List<Rental> findAll();
+	List<Rental> findAll();
 }

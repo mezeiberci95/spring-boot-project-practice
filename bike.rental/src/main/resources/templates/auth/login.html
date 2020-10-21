@@ -1,5 +1,5 @@
 <!doctype html>
-<html layout:decorate="~{layout_for_all}">
+<html layout:decorate="~{layout}">
 		<div layout layout:fragment="content"> 
 			<div class="form-group">
 				<form name="login" th:action="@{/login}" method="post" class="form-signin">
@@ -9,10 +9,6 @@
 						<input type="text" id="username" name="username" class="form-control" placeholder="Username" required="true" /> 
 					<label for="password" class="sr-only">Password</label> 
 						<input type="password" id="password" name="password" class="form-control" placeholder="Password" required="true" />
-					<div class="checkbox">
-						<label> <input id="remember-me" name="remember-me" type="checkbox" /> Remember me
-						</label>
-					</div>
 					<button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
 				</form>             
 			</div>

@@ -1,8 +1,6 @@
 package com.example.bike.rental.controller;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
 
@@ -29,9 +27,6 @@ import com.example.bike.rental.service.RenterService;
 
 @Controller
 public class MainController {
-	
-	private static final DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-	private static final DateFormat urlFormat = new SimpleDateFormat("yyyy-MM-dd");
 	
 	@Autowired
 	private BikeService bikeService;
@@ -98,8 +93,6 @@ public class MainController {
 	@GetMapping("/bikes/{id}/{startDateFromURL}/{endDateFromURL}")
 	public String showRentForm(@PathVariable(required = true) Long id, @PathVariable(required = true) String startDateFromURL, @PathVariable(required = true) String endDateFromURL, Model model) throws ParseException {
 		model.addAttribute("pageTitle", "Bike rental");
-		//model.addAttribute("startDate", startDate);
-		//model.addAttribute("endDate", endDate);
 		
 		Bike selectedBike = bikeService.findBikeById(id);
 		model.addAttribute("bike", selectedBike);
@@ -110,7 +103,7 @@ public class MainController {
 		if(!(start.isBefore(end) || start.equals(end)) || start.isBefore(LocalDate.now())) {
 			model.addAttribute("error", "Invalid date error");
 			model.addAttribute("message", "Invalid or past date given as argument");
-			return "redirect:invalid_date_page";
+			return "error";
 		}
 		
 		RentDetails rd = new RentDetails(startDateFromURL, endDateFromURL, selectedBike.getId());//urlFormat.format(start), urlFormat.format(end), selectedBike.getId());
@@ -160,7 +153,7 @@ public class MainController {
 		return "confirmed";
 	}
 	
-	@GetMapping("/allbikes")
+	@GetMapping("/allBikes")
 	public String showAllBikes(Model model){
 		model.addAttribute("bikes", bikeService.findBikes());
 		model.addAttribute("pageTitle", "Bike rental");

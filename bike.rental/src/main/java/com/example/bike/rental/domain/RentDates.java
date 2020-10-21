@@ -9,9 +9,11 @@ import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
+@EqualsAndHashCode
 public @Data class RentDates {
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd")

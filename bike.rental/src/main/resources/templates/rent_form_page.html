@@ -10,7 +10,7 @@
 			<div class="form-container">
 				<div class="form-group">
 					<form role="form" th:action="@{'/bikes/' + ${rentDetailsForm.selectedBikeId} + '/' + ${rentDetailsForm.startDate} + '/' + ${rentDetailsForm.endDate}}" th:object="${rentDetailsForm}" method="post">
-						<div style="color: red;" th:if="${#fields.hasErrors('*')}">
+						<div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('*')}">
 							<p><strong>Errors</strong></p>
 							<ul>
 								<li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>

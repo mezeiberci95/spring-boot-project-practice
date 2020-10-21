@@ -14,12 +14,14 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 
 @Entity
 @Table(name="RENTER")
 @NoArgsConstructor
+@EqualsAndHashCode
 public @Data class Renter {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)

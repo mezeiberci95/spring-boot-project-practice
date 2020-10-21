@@ -12,11 +12,13 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "BIKE")
 @NoArgsConstructor
+@EqualsAndHashCode
 public @Data class Bike {
 	
 	@Id

@@ -17,11 +17,13 @@ import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name="RENTAL")
 @NoArgsConstructor
+@EqualsAndHashCode
 public @Data class Rental {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE )

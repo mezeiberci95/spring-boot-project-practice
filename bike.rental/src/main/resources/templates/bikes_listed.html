@@ -7,12 +7,6 @@
             <p >Start date <span th:text="${startDate}"></span></p>
             <p >End date <span th:text="${endDate}"></span></p>
             <form action="#" th:action="@{/bikes}" th:object="${rentDates}" method="post">
-                <div style="color: red;" th:if="${#fields.hasErrors('*')}">
-                    <p><strong>Errors</strong></p>
-                    <ul>
-                        <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
-                    </ul>
-                </div>
                 <div class="form-row">
                     <div class="row">
                         <div class="col">

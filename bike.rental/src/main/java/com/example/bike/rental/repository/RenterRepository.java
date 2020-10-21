@@ -11,7 +11,7 @@ import com.example.bike.rental.domain.Renter;
 @Repository
 public interface RenterRepository extends CrudRepository<Renter, Long> {
 
-List<Renter> findAll();
+	List<Renter> findAll();
 	
 	@Query("select r from Renter r where r.email = ?1")
 	Renter findByEmail(String email);

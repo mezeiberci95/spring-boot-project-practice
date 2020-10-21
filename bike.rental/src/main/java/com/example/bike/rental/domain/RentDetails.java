@@ -10,11 +10,13 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
+@EqualsAndHashCode
 public @Data class RentDetails {
-	@NotNull(message = "Name too short")
+	@NotNull(message = "Name is too short")
 	@NotBlank(message = "Name cannot be empty")
 	@Size(min=5, max=30, message="Name too short")
 	@Pattern(regexp="^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$", message="Not a valid name")
@@ -35,7 +37,7 @@ public @Data class RentDetails {
 	
 	@NotNull(message = "Phone cannot be null.")
 	@NotBlank(message = "Phone cannot be empty")
-	@Pattern(regexp = "^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$", message = "Phone number format should be +20 3248371")
+	@Pattern(regexp = "^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$", message = "Phone number format should be like +20 3248371")
 	private String phone;
 	
 	@Min(1)

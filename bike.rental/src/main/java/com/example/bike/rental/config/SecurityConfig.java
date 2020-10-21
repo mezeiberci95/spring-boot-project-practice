@@ -15,17 +15,21 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
+	private UserDetailsService userService;
+	
+	@Autowired
 	public void configureAuth(AuthenticationManagerBuilder auth) throws Exception {
 		auth.inMemoryAuthentication()
 		.withUser("user")
 		.password("{noop}pass")
 		.roles("USER");
-
+		//auth.userDetailsService(userService);
 	}
 	
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 			.authorizeRequests()
+				.antMatchers("/admin/**").hasRole("admin")
 				.antMatchers("/css/**").permitAll()
 				.anyRequest().authenticated()
 				.and()
